@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>John Nohrden</title>
-  </head>
-  <body>
-    <h1>Hello, I'm John.</h1>
-    <p>Welcome to my personal site.</p>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Nohrden</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    header p {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+    section {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    h2 {
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .photos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .photos img {
+      width: 200px;
+      border-radius: 10px;
+    }
+    footer {
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>John Nohrden</h1>
+    <p>Welcome to my personal website</p>
+  </header>
+
+  <section>
+    <h2>About Me</h2>
+    <p>Hello! I’m John, a student and creative. This is my corner of the web where I share my projects, ideas, and a little about myself.</p>
+  </section>
+
+  <section>
+    <h2>Photos</h2>
+    <div class="photos">
+      <img src="images/photo1.jpg" alt="Photo 1">
+      <img src="images/photo2.jpg" alt="Photo 2">
+      <img src="images/photo3.jpg" alt="Photo 3">
+    </div>
+  </section>
+
+  <section>
+    <h2>Contact</h2>
+    <p>You can reach me via <a href="mailto:nohrdenj@gmail.com”>email</a> or follow me on <a href="https://github.com/johnnohrden">GitHub</a>.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 John Nohrden
+  </footer>
+
+</body>
 </html>
