@@ -3,93 +3,250 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Nohrden</title>
+  <title>John Nohrden | Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    :root {
+      --primary-green: #4E8F67;
+      --light-green: #E6F3EA;
+      --white: #FFFFFF;
+      --text-primary: #000000;
+      --text-secondary: rgba(0, 0, 0, 0.7);
+      --background: #FFFFFF;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      background-color: #f9f9f9;
-      color: #333;
+      box-sizing: border-box;
     }
-    header {
-      background-color: #222;
-      color: #fff;
-      padding: 40px 20px;
-      text-align: center;
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-    }
-    header p {
-      margin-top: 10px;
-      font-size: 1.2em;
-    }
-    section {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    h2 {
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-    .photos {
+
+    .hero {
+      height: 100vh;
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .photos img {
-      width: 200px;
-      border-radius: 10px;
-    }
-    footer {
-      background-color: #222;
-      color: #fff;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+      padding: 2rem;
+      background: var(--white);
+      color: var(--text-primary);
     }
-    a {
-      color: #1a73e8;
-      text-decoration: none;
+
+    .initials {
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      font-weight: 700;
+      color: var(--primary-green);
+      letter-spacing: 1rem;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeIn 1s ease-in forwards;
     }
-    a:hover {
-      text-decoration: underline;
+
+    .tagline {
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      opacity: 0;
+      animation: fadeIn 1s ease-in 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      font-size: 2rem;
+      color: var(--primary-green);
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
+    .section {
+      min-height: 100vh;
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section:nth-child(even) {
+      background: var(--light-green);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      color: var(--primary-green);
+      font-weight: 600;
+    }
+
+    .intro-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: justify;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+
+    .experience-grid, .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--primary-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .card-description {
+      font-size: 1rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    footer {
+      background: var(--light-green);
+      border-top: 2px solid var(--primary-green);
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      .initials { font-size: 4rem; }
+      .tagline { font-size: 1.2rem; }
+      .section-title { font-size: 2rem; }
+      .intro-text { font-size: 1rem; text-align: left; }
     }
   </style>
 </head>
 <body>
-
-  <header>
-    <h1>John Nohrden</h1>
-    <p>Welcome to my personal website</p>
-  </header>
-
-  <section>
-    <h2>About Me</h2>
-    <p>Hello! I’m John, a student and creative. This is my corner of the web where I share my projects, ideas, and a little about myself.</p>
+  <section class="hero">
+    <div class="initials">JCN</div>
+    <div class="tagline">
+      <span class="tagline-word">Building,</span>
+      <span class="tagline-word">Learning,</span>
+      <span class="tagline-word">Creating.</span>
+    </div>
+    <div class="scroll-indicator">↓</div>
   </section>
 
-  <section>
-    <h2>Photos</h2>
-    <div class="photos">
-      <img src="images/photo1.jpg" alt="Photo 1">
-      <img src="images/photo2.jpg" alt="Photo 2">
-      <img src="images/photo3.jpg" alt="Photo 3">
+  <section class="section">
+    <h2 class="section-title">MY STORY</h2>
+    <p class="intro-text">
+      I'm John Nohrden — a 17-year-old student, entrepreneur, and explorer obsessed with learning how things work. I balance the technical with the creative: from coding and design to philosophy and engineering. My goal is to build technology that enhances human experience and lives with dignity and beauty.
+    </p>
+    <p class="intro-text">
+      I believe simplicity is the ultimate sophistication — that design should speak through clarity, not noise. This portfolio reflects that belief: a fusion of code, story, and vision.
+    </p>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">EXPERIENCE</h2>
+    <div class="experience-grid">
+      <div class="card">
+        <div class="card-title">Entrepreneurial Projects</div>
+        <div class="card-subtitle">Founder & Creator</div>
+        <div class="card-description">
+          Developed and launched digital concepts focused on human-centered design and tech literacy. Blended storytelling with utility through UI/UX prototypes and small-scale web tools.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Design & Research</div>
+        <div class="card-subtitle">Independent</div>
+        <div class="card-description">
+          Studied the intersection of philosophy, engineering, and aesthetics. Inspired by human dignity and minimalist architecture to design meaningful experiences.
+        </div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>Contact</h2>
-    <p>You can reach me via <a href="mailto:nohrdenj@gmail.com”>email</a> or follow me on <a href="https://github.com/johnnohrden">GitHub</a>.</p>
+  <section class="section">
+    <h2 class="section-title">SKILLS & EXPERTISE</h2>
+    <div class="skills-grid">
+      <div class="card">
+        <div class="card-title">Web Development</div>
+        <div class="card-description">
+          HTML, CSS, JavaScript, and GitHub Pages for fast, minimal websites with clean code and human-friendly design.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Design Thinking</div>
+        <div class="card-description">
+          UX/UI design guided by simplicity and purpose — making technology intuitive and visually coherent.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Creative Systems</div>
+        <div class="card-description">
+          Integrating logic and imagination: from philosophy and art to automation and structure.
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>
-    &copy; 2025 John Nohrden
+    © 2025 John Nohrden — All Rights Reserved.
   </footer>
 
+  <script>
+    document.querySelector('.scroll-indicator').addEventListener('click', function() {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
+    });
+  </script>
 </body>
 </html>
