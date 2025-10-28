@@ -26,6 +26,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--background);
@@ -34,6 +38,102 @@
       overflow-x: hidden;
     }
 
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      border-bottom: 1px solid rgba(78, 143, 103, 0.2);
+    }
+
+    nav.visible {
+      transform: translateY(0);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-green);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-green);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-green);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary-green);
+      color: var(--white);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(100px);
+      transition: all 0.3s ease;
+      border: none;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 15px rgba(78, 143, 103, 0.3);
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-to-top:hover {
+      background: #3d7153;
+      transform: translateY(-5px);
+    }
+
+    /* Hero Section */
     .hero {
       height: 100vh;
       display: flex;
@@ -84,11 +184,20 @@
       60% { transform: translateY(-10px); }
     }
 
+    /* Sections */
     .section {
       min-height: 100vh;
       padding: 4rem 2rem;
       max-width: 1100px;
       margin: 0 auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section:nth-child(even) {
@@ -112,6 +221,7 @@
       color: var(--text-secondary);
     }
 
+    /* Cards */
     .experience-grid, .skills-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -151,6 +261,103 @@
       line-height: 1.6;
     }
 
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .project-image {
+      width: 100%;
+      height: 220px;
+      background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      font-style: italic;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .project-content {
+      padding: 1.5rem;
+    }
+
+    .project-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--primary-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-description {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Contact */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact-card {
+      background: var(--white);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-green);
+    }
+
+    .contact-icon {
+      font-size: 2rem;
+      color: var(--primary-green);
+    }
+
+    .contact-label {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .contact-value {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Footer */
     footer {
       background: var(--light-green);
       border-top: 2px solid var(--primary-green);
@@ -160,15 +367,31 @@
       font-weight: 500;
     }
 
+    /* Responsive */
     @media (max-width: 768px) {
       .initials { font-size: 4rem; }
       .tagline { font-size: 1.2rem; }
       .section-title { font-size: 2rem; }
       .intro-text { font-size: 1rem; text-align: left; }
+      .nav-links { display: none; }
+      .nav-logo { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
+  <nav id="navbar">
+    <div class="nav-logo">JCN</div>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <button class="back-to-top" id="backToTop">↑</button>
+
   <section class="hero">
     <div class="initials">JCN</div>
     <div class="tagline">
@@ -179,7 +402,7 @@
     <div class="scroll-indicator">↓</div>
   </section>
 
-  <section class="section">
+  <section class="section" id="story">
     <h2 class="section-title">MY STORY</h2>
     <p class="intro-text">
       I'm John Nohrden — a 17-year-old student, entrepreneur, and explorer obsessed with learning how things work. I balance the technical with the creative: from coding and design to philosophy and engineering. My goal is to build technology that enhances human experience and lives with dignity and beauty.
@@ -189,7 +412,42 @@
     </p>
   </section>
 
-  <section class="section">
+  <section class="section" id="projects">
+    <h2 class="section-title">PROJECTS</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image">[Project Image 1 - Replace with your image]</div>
+        <div class="project-content">
+          <div class="project-title">Project One</div>
+          <div class="project-description">
+            A description of your first project. Replace this text with details about what you built, the technologies used, and the impact it made.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">[Project Image 2 - Replace with your image]</div>
+        <div class="project-content">
+          <div class="project-title">Project Two</div>
+          <div class="project-description">
+            A description of your second project. Share the challenges you solved, lessons learned, and what makes this work meaningful to you.
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-image">[Project Image 3 - Replace with your image]</div>
+        <div class="project-content">
+          <div class="project-title">Project Three</div>
+          <div class="project-description">
+            A description of your third project. Highlight the unique aspects, your creative process, and how it aligns with your vision.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="experience">
     <h2 class="section-title">EXPERIENCE</h2>
     <div class="experience-grid">
       <div class="card">
@@ -210,7 +468,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="skills">
     <h2 class="section-title">SKILLS & EXPERTISE</h2>
     <div class="skills-grid">
       <div class="card">
@@ -236,16 +494,84 @@
     </div>
   </section>
 
+  <section class="section" id="contact">
+    <h2 class="section-title">GET IN TOUCH</h2>
+    <p class="intro-text" style="text-align: center;">
+      Interested in collaborating or just want to connect? Reach out through any of these platforms.
+    </p>
+    <div class="contact-grid">
+      <a href="mailto:nohrdenj@gmail.com" class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div class="contact-label">Email</div>
+        <div class="contact-value">nohrdenj@gmail.com</div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/johnnohrden/" target="_blank" rel="noopener noreferrer" class="contact-card">
+        <div class="contact-icon">💼</div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">@johnnohrden</div>
+      </a>
+
+      <a href="https://www.instagram.com/johnnohrden/" target="_blank" rel="noopener noreferrer" class="contact-card">
+        <div class="contact-icon">📸</div>
+        <div class="contact-label">Instagram</div>
+        <div class="contact-value">@johnnohrden</div>
+      </a>
+    </div>
+  </section>
+
   <footer>
     © 2025 John Nohrden — All Rights Reserved.
   </footer>
 
   <script>
+    // Navigation bar on scroll
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > window.innerHeight * 0.3) {
+        navbar.classList.add('visible');
+        backToTop.classList.add('visible');
+      } else {
+        navbar.classList.remove('visible');
+        backToTop.classList.remove('visible');
+      }
+    });
+
+    // Back to top button
+    backToTop.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Scroll indicator
     document.querySelector('.scroll-indicator').addEventListener('click', function() {
       window.scrollTo({
         top: window.innerHeight,
         behavior: 'smooth'
       });
+    });
+
+    // Intersection Observer for section animations
+    const sections = document.querySelectorAll('.section');
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(function(section) {
+      observer.observe(section);
     });
   </script>
 </body>
