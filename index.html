@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Nohrden</title>
+  <meta name="description" content="John Nohrden — Mechanical Engineering & Business, Northeastern '30.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Dark mode (default) ─── */
+    :root {
+      --bg:      #0d0b09;
+      --text:    #f0ebe3;
+      --muted:   #6b6359;
+      --faint:   #2a2620;
+      --border:  #1f1d1a;
+      --accent:  #34d399;
+      --font-d:  'Syne', sans-serif;
+      --font-b:  'Space Grotesk', sans-serif;
+      --pad:     48px;
+    }
+
+    /* ─── Light mode ─── */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg:     #f5f3ef;
+        --text:   #1a1814;
+        --muted:  #7a7268;
+        --faint:  #e4e0d8;
+        --border: #ddd9d0;
+        --accent: #059669;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-weight: 400;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── Grain ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23g)'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* ─── Keyframes ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes lineGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0);    }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── Scroll reveal ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity   0.75s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+    .d3 { transition-delay: 0.24s; }
+    .d4 { transition-delay: 0.32s; }
+
+    /* ─── Layout ─── */
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 0 var(--pad);
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px var(--pad);
+      animation: fadeIn 0.7s ease 0.1s both;
+    }
+    nav::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--bg) 55%, transparent);
+      pointer-events: none;
+    }
+    .nav-mark {
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+      z-index: 1;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      position: relative;
+      z-index: 1;
+    }
+    .nav-a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-a:hover { color: var(--text); }
+
+    /* ─── Hero ─── */
+    /* Hero breaks the wrap — name goes full viewport width, flush left */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 88px;
+    }
+
+    .hero-top {
+      /* eyebrow sits inside the max-width container */
+      max-width: 980px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 var(--pad);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 36px;
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    }
+
+    /* The name is full-width — left edge of viewport */
+    .hero-name {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: clamp(72px, 13.5vw, 176px);
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      padding: 0 var(--pad);
+      animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.48s both;
+      will-change: transform;
+    }
+
+    .hero-bottom {
+      max-width: 980px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 var(--pad);
+    }
+
+    .hero-rule {
+      height: 1px;
+      background: var(--accent);
+      transform-origin: left center;
+      transform: scaleX(0);
+      margin: 44px 0;
+      animation: lineGrow 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+      will-change: transform;
+    }
+
+    .hero-tagline {
+      max-width: 480px;
+      font-size: clamp(17px, 2.1vw, 21px);
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      animation: fadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.15s both;
+    }
+
+    .hero-foot {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 64px;
+      animation: fadeIn 0.8s ease 1.6s both;
+    }
+    .hero-foot-bar  { width: 28px; height: 1px; background: var(--faint); }
+    .hero-foot-text {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ─── Marquee ─── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      overflow: hidden;
+      user-select: none;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 32s linear infinite;
+      will-change: transform;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-set {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding-right: 40px;
+      flex-shrink: 0;
+    }
+    .marquee-word {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .marquee-track:hover .marquee-word { color: var(--text); }
+    .marquee-pip {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* ─── Sections ─── */
+    section {
+      padding: 144px 0;
+      border-top: 1px solid var(--border);
+    }
+    #about { border-top: none; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 72px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ─── About ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 175px;
+      gap: 72px;
+      align-items: start;
+    }
+
+    .about-body {
+      font-size: clamp(19px, 2.4vw, 23px);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .about-body strong { font-weight: 500; }
+
+    .about-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 56px;
+    }
+    .tag {
+      padding: 6px 15px;
+      border: 1px solid var(--border);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .tag:hover { border-color: var(--muted); color: var(--text); }
+
+    .about-photo-wrap {
+      position: sticky;
+      top: 96px;
+    }
+
+    .about-photo {
+      display: block;
+      width: 175px;
+      height: auto;
+      filter: grayscale(15%) contrast(1.04);
+      transition: filter 0.5s ease;
+    }
+    .about-photo:hover { filter: grayscale(0%) contrast(1); }
+
+    /* ─── Highlights ─── */
+    .hl-item {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 0 44px;
+      padding: 48px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+      transition: padding-left 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+      cursor: default;
+    }
+    .hl-item:first-child { border-top: 1px solid var(--border); }
+    .hl-item:hover { padding-left: 20px; }
+
+    .hl-num {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      padding-top: 5px;
+      transition: color 0.25s;
+    }
+    .hl-item:hover .hl-num { color: var(--accent); }
+
+    .hl-title {
+      font-family: var(--font-d);
+      font-size: clamp(22px, 3.2vw, 32px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 10px;
+      transition: color 0.25s;
+    }
+    .hl-item:hover .hl-title { color: var(--accent); }
+
+    .hl-meta {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .hl-badge {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 3px 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--accent) 65%, transparent);
+    }
+
+    /* ─── Connect ─── */
+    .connect-head {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: clamp(56px, 9.5vw, 128px);
+      letter-spacing: -0.035em;
+      line-height: 0.9;
+      color: var(--text);
+      margin-bottom: 80px;
+    }
+
+    .connect-rows { display: flex; flex-direction: column; }
+
+    .connect-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      transition: padding-left 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .connect-row:first-child { border-top: 1px solid var(--border); }
+    .connect-row:hover { padding-left: 20px; }
+
+    .connect-row-label {
+      font-family: var(--font-d);
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--text);
+      transition: color 0.25s;
+    }
+    .connect-row:hover .connect-row-label { color: var(--accent); }
+
+    .connect-row-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .connect-arrow {
+      font-size: 18px;
+      color: var(--muted);
+      transition: color 0.25s, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      flex-shrink: 0;
+    }
+    .connect-row:hover .connect-arrow {
+      color: var(--accent);
+      transform: translate(5px, -5px);
+    }
+
+    /* ─── Footer ─── */
+    footer { border-top: 1px solid var(--border); padding: 48px 0; }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy, .footer-loc {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── Reduced motion ─── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay:    0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ─── Mobile ─── */
+    @media (max-width: 640px) {
+      :root { --pad: 28px; }
+      nav           { padding: 24px var(--pad); }
+      .hero         { padding-bottom: 64px; }
+      section       { padding: 96px 0; }
+      .section-label{ margin-bottom: 52px; }
+      .about-grid   { grid-template-columns: 1fr; gap: 44px; }
+      .about-photo-wrap { position: static; }
+      .about-photo  { width: 140px; }
+      .hl-item      { grid-template-columns: 38px 1fr; gap: 0 24px; padding: 36px 0; }
+      .connect-head { margin-bottom: 52px; }
+      .connect-row  { padding: 24px 0; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-mark">JN</a>
+    <div class="nav-links">
+      <a href="#highlights" class="nav-a">Work</a>
+      <a href="#connect" class="nav-a">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero — name breaks out of wrap for full left-edge alignment -->
+  <div class="hero">
+    <div class="hero-top">
+      <p class="hero-eyebrow">Dover, MA &thinsp;→&thinsp; Boston</p>
+    </div>
+    <h1 class="hero-name">John<br>Nohrden</h1>
+    <div class="hero-bottom">
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="hero-tagline">
+        Mechanical Engineering &amp; Business at Northeastern.<br>
+        Building things that work in the real world.
+      </p>
+      <div class="hero-foot" aria-hidden="true">
+        <span class="hero-foot-bar"></span>
+        <span class="hero-foot-text">Class of 2030</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-set">
+        <span class="marquee-word">Builder</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Engineer</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Athlete</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Founder</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Northeastern '30</span><span class="marquee-pip"></span>
+        <span class="marquee-word">London Scholars</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Dover, MA</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Catholic Memorial</span><span class="marquee-pip"></span>
+      </div>
+      <div class="marquee-set" aria-hidden="true">
+        <span class="marquee-word">Builder</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Engineer</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Athlete</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Founder</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Northeastern '30</span><span class="marquee-pip"></span>
+        <span class="marquee-word">London Scholars</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Dover, MA</span><span class="marquee-pip"></span>
+        <span class="marquee-word">Catholic Memorial</span><span class="marquee-pip"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap">
+      <p class="section-label reveal">About</p>
+      <div class="about-grid">
+        <div>
+          <p class="about-body reveal d1">
+            Incoming freshman at <strong>Northeastern University</strong>, studying Mechanical Engineering and Business through the <strong>London Scholars Program</strong>. I build things — software, companies, habits — and I'm most at home when the problem is hard and the stakes are real.
+          </p>
+          <div class="about-tags reveal d2">
+            <span class="tag">Catholic Memorial '26</span>
+            <span class="tag">Northeastern '30</span>
+            <span class="tag">ME × Business</span>
+            <span class="tag">Music</span>
+            <span class="tag">Building</span>
+          </div>
+        </div>
+        <div class="about-photo-wrap reveal d2">
+          <img
+            src="ssfv2.png"
+            alt="John Nohrden"
+            class="about-photo"
+            width="684"
+            height="987"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section id="highlights">
+    <div class="wrap">
+      <p class="section-label reveal">Highlights</p>
+
+      <div class="hl-item reveal">
+        <span class="hl-num">01</span>
+        <div>
+          <p class="hl-title">2nd Place — DreamVenture Hackathon</p>
+          <p class="hl-meta">Microsoft &middot; January 2026</p>
+          <span class="hl-badge">Hackathon</span>
+        </div>
+      </div>
+
+      <div class="hl-item reveal d1">
+        <span class="hl-num">02</span>
+        <div>
+          <p class="hl-title">Co-Founder, PWD Club</p>
+          <p class="hl-meta">AI automations &amp; workflow infrastructure built on n8n</p>
+          <span class="hl-badge">Startup</span>
+        </div>
+      </div>
+
+      <div class="hl-item reveal d2">
+        <span class="hl-num">03</span>
+        <div>
+          <p class="hl-title">Incoming Intern — TransPerfect</p>
+          <p class="hl-meta">Language services &amp; localization &middot; Summer 2026</p>
+          <span class="hl-badge">Internship</span>
+        </div>
+      </div>
+
+      <div class="hl-item reveal d3">
+        <span class="hl-num">04</span>
+        <div>
+          <p class="hl-title">London Scholars Program</p>
+          <p class="hl-meta">Northeastern University &middot; Class of 2030</p>
+          <span class="hl-badge">Academic</span>
+        </div>
+      </div>
+
+      <div class="hl-item reveal d4">
+        <span class="hl-num">05</span>
+        <div>
+          <p class="hl-title">Burgess Properties &amp; Kingsbury Club</p>
+          <p class="hl-meta">Commercial real estate &middot; Hospitality operations</p>
+          <span class="hl-badge">Work</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Connect -->
+  <section id="connect">
+    <div class="wrap">
+      <p class="section-label reveal">Connect</p>
+      <h2 class="connect-head reveal d1">Let's<br>talk.</h2>
+      <div class="connect-rows">
+
+        <a href="mailto:nohrdenj@gmail.com" class="connect-row reveal">
+          <div>
+            <p class="connect-row-label">Email</p>
+            <p class="connect-row-sub">nohrdenj@gmail.com</p>
+          </div>
+          <span class="connect-arrow">↗</span>
+        </a>
+
+        <a href="https://linkedin.com/in/johnnohrden" target="_blank" rel="noopener" class="connect-row reveal d1">
+          <div>
+            <p class="connect-row-label">LinkedIn</p>
+            <p class="connect-row-sub">linkedin.com/in/johnnohrden</p>
+          </div>
+          <span class="connect-arrow">↗</span>
+        </a>
+
+        <a href="https://instagram.com/johnnohrden" target="_blank" rel="noopener" class="connect-row reveal d2">
+          <div>
+            <p class="connect-row-label">Instagram</p>
+            <p class="connect-row-sub">@johnnohrden</p>
+          </div>
+          <span class="connect-arrow">↗</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 John Nohrden</span>
+        <span class="footer-loc">Dover, MA</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      }),
+      { threshold: 0.07, rootMargin: '0px 0px -28px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
