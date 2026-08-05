@@ -3,36 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="John Nohrden — Engineer, Builder, Leader. Dual-degree student at Northeastern University.">
+  <meta name="description" content="John Nohrden — Mechanical Engineering &amp; Business Administration at Northeastern University.">
   <title>John Nohrden</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="stylesheet" href="style.css?v=5">
 
-  <link rel="stylesheet" href="style.css?v=4">
+  <!-- Restore theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jn-theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
-
-  <!-- Custom cursor -->
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- Loader -->
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <div class="loader-initials">
-        <span>J</span><span>N</span>
-      </div>
-      <div class="loader-progress"><div class="loader-fill"></div></div>
-    </div>
-  </div>
-
-  <!-- Scroll progress -->
-  <div class="scroll-bar" id="scrollBar"></div>
 
   <!-- Navigation -->
   <nav class="nav" id="nav">
@@ -51,84 +41,36 @@
   </nav>
 
   <!-- ═══════════════ HERO ═══════════════ -->
-  <section class="hero" id="hero">
-    <div class="hero-noise"></div>
-    <div class="hero-gradient"></div>
-
-    <div class="hero-marks" aria-hidden="true">
-      <span class="hmark hmark--tl"></span>
-      <span class="hmark hmark--tr"></span>
-      <span class="hmark hmark--bl"></span>
-      <span class="hmark hmark--br"></span>
-    </div>
-
+  <header class="hero" id="hero">
     <div class="hero-body">
-      <p class="hero-eyebrow">
-        <span class="eyebrow-char">P</span><span class="eyebrow-char">o</span><span class="eyebrow-char">r</span><span class="eyebrow-char">t</span><span class="eyebrow-char">f</span><span class="eyebrow-char">o</span><span class="eyebrow-char">l</span><span class="eyebrow-char">i</span><span class="eyebrow-char">o</span><span class="eyebrow-sep">&nbsp;·&nbsp;</span><span class="eyebrow-char">2</span><span class="eyebrow-char">0</span><span class="eyebrow-char">2</span><span class="eyebrow-char">6</span>
-      </p>
-
       <h1 class="hero-name">
-        <div class="name-row">
-          <span class="scramble" data-text="JOHN">JOHN</span>
-        </div>
-        <div class="name-row name-row--indent">
-          <span class="scramble italic-text" data-text="NOHRDEN">NOHRDEN</span>
-        </div>
+        <span class="name-row">JOHN</span>
+        <span class="name-row">NOHRDEN</span>
       </h1>
-
-      <div class="hero-tagline">
-        <span class="tag-item">Engineer</span>
-        <span class="tag-sep">·</span>
-        <span class="tag-item">Builder</span>
-        <span class="tag-sep">·</span>
-        <span class="tag-item">Leader</span>
-      </div>
 
       <p class="hero-sub">
         Mechanical Engineering &amp; Business Administration<br>
         Northeastern University · Class of 2030
       </p>
-    </div>
 
-    <div class="hero-foot">
-      <div class="hero-location">
-        <span class="status-dot" aria-hidden="true"></span>
-        <span>Dover, MA</span>
-        <span class="hero-coord">42.25° N / 71.28° W</span>
-      </div>
-      <div class="hero-scroll-hint">
-        <div class="scroll-pill">
-          <div class="scroll-dot"></div>
-        </div>
-        <span>Scroll</span>
-      </div>
+      <p class="hero-location">Dover, MA</p>
     </div>
-  </section>
+  </header>
 
   <!-- ═══════════════ ABOUT ═══════════════ -->
   <section class="section" id="about">
     <div class="container">
       <div class="sec-label-row">
         <span class="sec-num mono">01</span>
-        <span class="sec-label">About</span>
+        <h2 class="sec-label">About</h2>
       </div>
 
       <div class="about-grid">
         <div class="about-img-col">
-          <div class="img-reveal-wrap">
-            <div class="img-mask"></div>
-            <img src="john.jpg" alt="John Nohrden" class="about-photo">
-          </div>
-          <p class="img-caption mono">John Nohrden · 2026</p>
+          <img src="john.jpg" alt="John Nohrden" class="about-photo">
         </div>
 
         <div class="about-text-col">
-          <h2 class="sec-heading">
-            Driven by<br>
-            <em>curiosity</em><br>
-            &amp; craft.
-          </h2>
-
           <div class="about-body">
             <p>I'm an incoming dual-degree student at Northeastern University — London Scholars Program, studying Mechanical Engineering and Business Administration. I build things: robots, software, organizations.</p>
             <p>From captaining three varsity programs to volunteering solo with the Missionaries of Charity in Kolkata, I bring the same intensity everywhere.</p>
@@ -136,15 +78,15 @@
 
           <div class="stats-row">
             <div class="stat">
-              <div class="stat-num mono counter" data-target="3">0</div>
+              <div class="stat-num mono">3</div>
               <div class="stat-label">Teams<br>Captained</div>
             </div>
             <div class="stat">
-              <div class="stat-num mono counter" data-target="6">0</div>
+              <div class="stat-num mono">6</div>
               <div class="stat-label">State<br>Championships</div>
             </div>
             <div class="stat">
-              <div class="stat-num mono counter" data-target="4">0</div>
+              <div class="stat-num mono">4</div>
               <div class="stat-label">Years of<br>Robotics</div>
             </div>
           </div>
@@ -158,15 +100,12 @@
     <div class="container">
       <div class="sec-label-row">
         <span class="sec-num mono">02</span>
-        <span class="sec-label">Experience</span>
+        <h2 class="sec-label">Experience</h2>
       </div>
-
-      <h2 class="sec-heading">Where I've<br><em>built</em> things.</h2>
 
       <div class="exp-list">
 
         <div class="exp-item">
-          <div class="exp-rule"></div>
           <div class="exp-inner">
             <div class="exp-meta-col">
               <img src="transperfect-logo.png.avif" alt="TransPerfect logo" class="exp-logo">
@@ -187,7 +126,6 @@
         </div>
 
         <div class="exp-item">
-          <div class="exp-rule"></div>
           <div class="exp-inner">
             <div class="exp-meta-col">
               <img src="PWD-logo.png" alt="PWD Club logo" class="exp-logo">
@@ -209,7 +147,6 @@
         </div>
 
         <div class="exp-item">
-          <div class="exp-rule"></div>
           <div class="exp-inner">
             <div class="exp-meta-col">
               <img src="burgess-properties-logo.png" alt="Burgess Properties logo" class="exp-logo">
@@ -230,7 +167,6 @@
         </div>
 
         <div class="exp-item">
-          <div class="exp-rule"></div>
           <div class="exp-inner">
             <div class="exp-meta-col">
               <img src="Bogart-Finish-Logo.png" alt="Bogart Finish logo" class="exp-logo">
@@ -249,10 +185,6 @@
           </div>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-rule"></div>
-        </div>
-
       </div>
     </div>
   </section>
@@ -262,17 +194,15 @@
     <div class="container">
       <div class="sec-label-row">
         <span class="sec-num mono">03</span>
-        <span class="sec-label">Education</span>
+        <h2 class="sec-label">Education</h2>
       </div>
-
-      <h2 class="sec-heading">Foundations<br>of <em>excellence.</em></h2>
 
       <div class="edu-grid">
         <div class="edu-card">
           <div class="edu-card-top">
             <span class="mono small">Class of 2030</span>
           </div>
-          <h3 class="edu-school">Northeastern<br>University</h3>
+          <h3 class="edu-school">Northeastern University</h3>
           <p class="edu-prog">London Scholars Program</p>
           <p class="edu-deg">B.S. Mechanical Engineering<br>B.S. Business Administration</p>
           <p class="edu-note">First year at NU London campus</p>
@@ -282,7 +212,7 @@
           <div class="edu-card-top">
             <span class="mono small">Graduated May 2026</span>
           </div>
-          <h3 class="edu-school">Catholic<br>Memorial</h3>
+          <h3 class="edu-school">Catholic Memorial</h3>
           <p class="edu-prog">West Roxbury, MA</p>
           <p class="edu-deg">GPA: 93.42/100 (weighted)</p>
           <ul class="edu-list">
@@ -295,7 +225,7 @@
           <div class="edu-card-top">
             <span class="mono small">Dual Enrollment</span>
           </div>
-          <h3 class="edu-school">Wentworth &<br>Stonehill</h3>
+          <h3 class="edu-school">Wentworth &amp; Stonehill</h3>
           <ul class="edu-list">
             <li>Wentworth Institute — Robotics (Spring 2025)</li>
             <li>Stonehill College — Entrepreneurship (Fall 2024)</li>
@@ -306,7 +236,7 @@
           <div class="edu-card-top">
             <span class="mono small">Intensive Program</span>
           </div>
-          <h3 class="edu-school">Princeton<br>University</h3>
+          <h3 class="edu-school">Princeton University</h3>
           <p class="edu-prog">Witherspoon Institute</p>
           <p class="edu-deg">Classical Philosophy</p>
           <p class="edu-note">Aristotle seminar under Prof. R.J. Snell</p>
@@ -320,181 +250,100 @@
     <div class="container">
       <div class="sec-label-row">
         <span class="sec-num mono">04</span>
-        <span class="sec-label">Leadership</span>
+        <h2 class="sec-label">Leadership</h2>
       </div>
-
-      <h2 class="sec-heading">Leading<br>from the <em>front.</em></h2>
 
       <div class="lead-list">
         <div class="lead-item">
-          <div class="lead-rule"></div>
-          <div class="lead-inner">
-            <div class="lead-glyph">⚔</div>
-            <div class="lead-body">
-              <div class="lead-header">
-                <h3 class="lead-title">Speech &amp; Debate Captain</h3>
-                <span class="lead-dates mono">2021 – 2026</span>
-              </div>
-              <p class="lead-desc">Catholic Memorial · Led team to Massachusetts state championship, April 2026 — program's 6th consecutive title. Four years on statewide circuit; captain for team culture and competition prep.</p>
-            </div>
+          <div class="lead-header">
+            <h3 class="lead-title">Speech &amp; Debate Captain</h3>
+            <span class="lead-dates mono">2021 – 2026</span>
           </div>
+          <p class="lead-desc">Catholic Memorial · Led team to Massachusetts state championship, April 2026 — program's 6th consecutive title. Four years on statewide circuit; captain for team culture and competition prep.</p>
         </div>
 
         <div class="lead-item">
-          <div class="lead-rule"></div>
-          <div class="lead-inner">
-            <div class="lead-glyph">⚙</div>
-            <div class="lead-body">
-              <div class="lead-header">
-                <h3 class="lead-title">Robotics Captain</h3>
-                <span class="lead-dates mono">2021 – 2026</span>
-              </div>
-              <p class="lead-desc">Catholic Memorial · Led electrical sub-team across four years. Circuit design, embedded systems, and CAD.</p>
-            </div>
+          <div class="lead-header">
+            <h3 class="lead-title">Robotics Captain</h3>
+            <span class="lead-dates mono">2021 – 2026</span>
           </div>
+          <p class="lead-desc">Catholic Memorial · Led electrical sub-team across four years. Circuit design, embedded systems, and CAD.</p>
         </div>
 
         <div class="lead-item">
-          <div class="lead-rule"></div>
-          <div class="lead-inner">
-            <div class="lead-glyph">◎</div>
-            <div class="lead-body">
-              <div class="lead-header">
-                <h3 class="lead-title">Cross Country Captain</h3>
-                <span class="lead-dates mono">2025 – 2026</span>
-              </div>
-              <p class="lead-desc">Catholic Memorial · Achieved sub-17:00 5K in first competitive season. Led daily team practices.</p>
-            </div>
+          <div class="lead-header">
+            <h3 class="lead-title">Cross Country Captain</h3>
+            <span class="lead-dates mono">2025 – 2026</span>
           </div>
+          <p class="lead-desc">Catholic Memorial · Achieved sub-17:00 5K in first competitive season. Led daily team practices.</p>
         </div>
 
         <div class="lead-item">
-          <div class="lead-rule"></div>
-          <div class="lead-inner">
-            <div class="lead-glyph">✦</div>
-            <div class="lead-body">
-              <div class="lead-header">
-                <h3 class="lead-title">Volunteer</h3>
-                <span class="lead-dates mono">2026</span>
-              </div>
-              <p class="lead-desc">Missionaries of Charity · Kolkata, India · Solo traveled to serve independently with Mother Teresa's Missionaries of Charity.</p>
-            </div>
+          <div class="lead-header">
+            <h3 class="lead-title">Volunteer</h3>
+            <span class="lead-dates mono">2026</span>
           </div>
-        </div>
-
-        <div class="lead-item">
-          <div class="lead-rule"></div>
+          <p class="lead-desc">Missionaries of Charity · Kolkata, India · Solo traveled to serve independently with Mother Teresa's Missionaries of Charity.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ SKILLS MARQUEE ═══════════════ -->
-  <section class="skills-section">
-    <div class="marquee-track">
-      <div class="marquee-inner" id="marqueeInner">
-        <span class="m-tag">Claude Code</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Prompt Engineering</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">LLM Integration</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Robotics</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Circuit Design</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Arduino</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">CAD</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Embedded Systems</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Latin</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Claude API</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Web Development</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Construction</span>
-        <span class="m-sep">·</span>
+  <!-- ═══════════════ SKILLS ═══════════════ -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="sec-label-row">
+        <span class="sec-num mono">05</span>
+        <h2 class="sec-label">Skills</h2>
       </div>
-      <div class="marquee-inner marquee-inner--clone" aria-hidden="true">
+
+      <div class="skills-list">
         <span class="m-tag">Claude Code</span>
-        <span class="m-sep">·</span>
         <span class="m-tag">Prompt Engineering</span>
-        <span class="m-sep">·</span>
         <span class="m-tag">LLM Integration</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Robotics</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Circuit Design</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Arduino</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">CAD</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Embedded Systems</span>
-        <span class="m-sep">·</span>
-        <span class="m-tag">Latin</span>
-        <span class="m-sep">·</span>
         <span class="m-tag">Claude API</span>
-        <span class="m-sep">·</span>
+        <span class="m-tag">Robotics</span>
+        <span class="m-tag">Circuit Design</span>
+        <span class="m-tag">Arduino</span>
+        <span class="m-tag">Embedded Systems</span>
+        <span class="m-tag">CAD</span>
         <span class="m-tag">Web Development</span>
-        <span class="m-sep">·</span>
         <span class="m-tag">Construction</span>
-        <span class="m-sep">·</span>
+        <span class="m-tag">Latin</span>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════ CONTACT ═══════════════ -->
-  <section class="section contact-section" id="contact">
+  <section class="section" id="contact">
     <div class="container">
       <div class="sec-label-row">
-        <span class="sec-num mono">05</span>
-        <span class="sec-label">Contact</span>
+        <span class="sec-num mono">06</span>
+        <h2 class="sec-label">Contact</h2>
       </div>
-
-      <h2 class="sec-heading contact-heading">Let's<br><em>connect.</em></h2>
 
       <div class="contact-links">
         <a href="mailto:nohrdenj@gmail.com" class="contact-link">
           <span class="cl-label mono">Email</span>
           <span class="cl-value">nohrdenj@gmail.com</span>
-          <span class="cl-arrow">→</span>
         </a>
-        <div class="cl-rule"></div>
         <a href="https://linkedin.com/in/johnnohrden" target="_blank" rel="noopener" class="contact-link">
           <span class="cl-label mono">LinkedIn</span>
           <span class="cl-value">linkedin.com/in/johnnohrden</span>
-          <span class="cl-arrow">→</span>
         </a>
-        <div class="cl-rule"></div>
         <a href="tel:6175153808" class="contact-link">
           <span class="cl-label mono">Phone</span>
           <span class="cl-value">617-515-3808</span>
-          <span class="cl-arrow">→</span>
         </a>
-        <div class="cl-rule"></div>
       </div>
     </div>
-
-    <footer class="site-footer">
-      <span class="mono small">© 2026 John Nohrden</span>
-      <span class="mono small">Dover, MA</span>
-    </footer>
   </section>
 
-  <!-- Side index rail -->
-  <nav class="rail" aria-label="Section index">
-    <a href="#hero"       class="rail-item is-active" data-rail="hero"><span class="rail-label">Home</span><span class="rail-tick"></span></a>
-    <a href="#about"      class="rail-item" data-rail="about"><span class="rail-label">About</span><span class="rail-tick"></span></a>
-    <a href="#experience" class="rail-item" data-rail="experience"><span class="rail-label">Work</span><span class="rail-tick"></span></a>
-    <a href="#education"  class="rail-item" data-rail="education"><span class="rail-label">Education</span><span class="rail-tick"></span></a>
-    <a href="#leadership" class="rail-item" data-rail="leadership"><span class="rail-label">Leadership</span><span class="rail-tick"></span></a>
-    <a href="#contact"    class="rail-item" data-rail="contact"><span class="rail-label">Contact</span><span class="rail-tick"></span></a>
-  </nav>
+  <footer class="site-footer">
+    <span class="mono small">© 2026 John Nohrden</span>
+    <span class="mono small">Dover, MA</span>
+  </footer>
 
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
