@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Projects by John Nohrden — engineering, software, and robotics work.">
+  <title>Projects — John Nohrden</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <link rel="stylesheet" href="style.css?v=4">
+
+  <!-- Restore theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('jn-theme');
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <style>
+    /* ═══════════════════════════════════════════
+       PROJECTS PAGE — page-specific styles
+    ══════════════════════════════════════════ */
+
+    /* Page masthead (compact hero) */
+    .page-head {
+      padding: calc(var(--sec-py) + 60px) var(--pad) clamp(48px, 6vw, 80px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-head-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 11vw, 9rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .page-title em {
+      font-style: italic;
+      color: var(--accent);
+      transition: color 0.7s;
+    }
+
+    /* style.css hides .scramble until the hero timeline reveals it;
+       here the .page-title wrapper handles the fade instead. */
+    .page-title .scramble { opacity: 1; }
+
+    /* style.css appends " / 05" to every section number (index has 5
+       sections). This page has one, so drop the pagination suffix. */
+    #projects .sec-num::after { content: ''; }
+
+    .page-lede {
+      margin-top: 32px;
+      max-width: 46ch;
+      font-size: 1.0625rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+
+    .page-head-rule {
+      max-width: var(--max-w);
+      margin: clamp(48px, 6vw, 72px) auto 0;
+      height: 1px;
+      background: var(--border-strong);
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    /* ─── Project grid ─── */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: clamp(20px, 2.5vw, 32px);
+    }
+
+    .proj-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 36px 32px 32px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: border-color 0.4s var(--ease), transform 0.5s var(--ease);
+    }
+
+    .proj-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, var(--accent), transparent 65%);
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
+      pointer-events: none;
+    }
+
+    .proj-card:hover { border-color: var(--border-strong); }
+    .proj-card:hover::before { opacity: 0.04; }
+
+    .proj-card-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .proj-index {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .proj-year {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .proj-title {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .proj-desc {
+      font-size: 0.9375rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: auto;
+      margin-bottom: 22px;
+    }
+
+    .proj-tag {
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+    }
+
+    .proj-links {
+      display: flex;
+      gap: 24px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+
+    .proj-link {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.3s;
+    }
+
+    .proj-link .pl-arrow { transition: transform 0.35s var(--ease); }
+    .proj-link:hover { color: var(--accent); }
+    .proj-link:hover .pl-arrow { transform: translateX(5px); }
+
+    /* ─── Empty state ─── */
+    .proj-empty {
+      position: relative;
+      padding: clamp(56px, 9vw, 110px) clamp(28px, 5vw, 64px);
+      border: 1px dashed var(--border-strong);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .proj-empty-glyph {
+      font-family: var(--serif);
+      font-size: 2.25rem;
+      color: var(--text-muted);
+      opacity: 0.55;
+      margin-bottom: 22px;
+      letter-spacing: 0.1em;
+    }
+
+    .proj-empty-title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .proj-empty-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .proj-empty-body {
+      max-width: 42ch;
+      margin: 0 auto 32px;
+      font-size: 0.9375rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+
+    .proj-empty-cta {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-strong);
+      padding-bottom: 6px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .proj-empty-cta:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .proj-empty-cta .pl-arrow { transition: transform 0.35s var(--ease); }
+    .proj-empty-cta:hover .pl-arrow { transform: translateX(5px); }
+
+    /* Back link above the footer */
+    .page-back {
+      max-width: var(--max-w);
+      margin: clamp(64px, 8vw, 110px) auto 0;
+      padding: 0 var(--pad);
+    }
+
+    .back-link {
+      font-family: var(--mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      transition: color 0.3s;
+    }
+
+    .back-link .bl-arrow { transition: transform 0.35s var(--ease); }
+    .back-link:hover { color: var(--accent); }
+    .back-link:hover .bl-arrow { transform: translateX(-6px); }
+
+    .page-footer-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--pad) 40px;
+    }
+
+    /* Current-page nav state */
+    .nav-link.is-current { color: var(--text); }
+    .nav-link.is-current::after { width: 100%; }
+
+    @media (max-width: 640px) {
+      .proj-grid { grid-template-columns: 1fr; }
+      .page-head { padding-top: calc(var(--sec-py) + 24px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Loader -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-initials">
+        <span>J</span><span>N</span>
+      </div>
+      <div class="loader-progress"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-bar" id="scrollBar"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <a href="index.html" class="nav-logo">JN</a>
+    <div class="nav-links">
+      <a href="index.html#about" class="nav-link">About</a>
+      <a href="index.html#experience" class="nav-link">Experience</a>
+      <a href="index.html#education" class="nav-link">Education</a>
+      <a href="projects.html" class="nav-link is-current">Projects</a>
+      <a href="index.html#contact" class="nav-link">Contact</a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
+
+  <!-- ═══════════════ PAGE HEAD ═══════════════ -->
+  <header class="page-head">
+    <div class="page-head-inner">
+      <p class="page-eyebrow" id="pageEyebrow">Selected Work · 2026</p>
+      <h1 class="page-title">
+        <span class="scramble" data-text="PROJECTS">PROJECTS</span>
+      </h1>
+      <p class="page-lede">
+        Things I've designed, built, broken, and rebuilt — robotics, software,
+        and everything in between.
+      </p>
+    </div>
+    <div class="page-head-rule" id="headRule"></div>
+  </header>
+
+  <!-- ═══════════════ PROJECTS ═══════════════ -->
+  <section class="section" id="projects" style="padding-top: clamp(56px, 7vw, 96px);">
+    <div class="container">
+      <div class="sec-label-row">
+        <span class="sec-num mono">01</span>
+        <span class="sec-label">Projects</span>
+      </div>
+
+      <!-- Rendered from the PROJECTS array in the script below.
+           Empty array → the empty state appears automatically. -->
+      <div class="proj-grid" id="projGrid" hidden></div>
+
+      <div class="proj-empty" id="projEmpty">
+        <div class="proj-empty-glyph">◆</div>
+        <h2 class="proj-empty-title">Currently <em>under construction.</em></h2>
+        <p class="proj-empty-body">
+          This page is where the build logs go. Nothing published yet —
+          check back soon, or reach out if you want to hear what I'm working on.
+        </p>
+        <a href="index.html#contact" class="proj-empty-cta">
+          <span>Get in touch</span>
+          <span class="pl-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="page-back">
+      <a href="index.html" class="back-link">
+        <span class="bl-arrow">←</span>
+        <span>Back to home</span>
+      </a>
+    </div>
+
+    <div class="page-footer-wrap">
+      <footer class="site-footer">
+        <span class="mono small">© 2026 John Nohrden</span>
+        <span class="mono small">Dover, MA</span>
+      </footer>
+    </div>
+  </section>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     PROJECTS DATA
+     ───────────────────────────────────────────────────────────
+     To add a project, drop an object into this array. Everything
+     else — layout, animation, numbering — happens automatically.
+     The empty state disappears as soon as there is one entry.
+
+     {
+       title: 'Project name',
+       year:  '2026',
+       desc:  'One or two sentences on what it is and what you did.',
+       tags:  ['Arduino', 'CAD'],
+       links: [
+         { label: 'Live',   href: 'https://…' },
+         { label: 'GitHub', href: 'https://…' }
+       ]
+     }
+  ══════════════════════════════════════════════════════════ */
+  const PROJECTS = [];
+
+  /* ═══════════════════════════════════════════════════════════
+     RENDER + BEHAVIOUR
+  ══════════════════════════════════════════════════════════ */
+  const $  = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+  const prefersReducedMotion =
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // If the GSAP CDN is blocked or offline, the page must still render.
+  const HAS_GSAP =
+    typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+
+  const esc = (str) => String(str).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+
+  function renderProjects() {
+    const grid  = $('#projGrid');
+    const empty = $('#projEmpty');
+
+    if (!PROJECTS.length) {
+      grid.hidden = true;
+      empty.hidden = false;
+      return;
+    }
+
+    empty.hidden = true;
+    grid.hidden = false;
+
+    grid.innerHTML = PROJECTS.map((p, i) => {
+      const num   = String(i + 1).padStart(2, '0');
+      const tags  = (p.tags || [])
+        .map(t => `<span class="proj-tag">${esc(t)}</span>`).join('');
+      const links = (p.links || [])
+        .map(l => `<a class="proj-link" href="${esc(l.href)}" target="_blank" rel="noopener">
+                     <span>${esc(l.label)}</span><span class="pl-arrow">→</span>
+                   </a>`).join('');
+
+      return `
+        <article class="proj-card">
+          <div class="proj-card-top">
+            <span class="proj-index">${num}</span>
+            <span class="proj-year">${esc(p.year || '')}</span>
+          </div>
+          <h2 class="proj-title">${esc(p.title || 'Untitled')}</h2>
+          <p class="proj-desc">${esc(p.desc || '')}</p>
+          ${tags  ? `<div class="proj-tags">${tags}</div>` : ''}
+          ${links ? `<div class="proj-links">${links}</div>` : ''}
+        </article>`;
+    }).join('');
+  }
+
+  /* ─── Theme toggle (shares the key with index.html) ─── */
+  function initTheme() {
+    const btn  = $('#themeBtn');
+    const html = document.documentElement;
+    const stored = localStorage.getItem('jn-theme');
+    if (stored) html.dataset.theme = stored;
+
+    btn.addEventListener('click', () => {
+      const next = html.dataset.theme === 'dark' ? 'light' : 'dark';
+      html.dataset.theme = next;
+      localStorage.setItem('jn-theme', next);
+    });
+  }
+
+  /* ─── Custom cursor (body has cursor:none) ─── */
+  function initCursor() {
+    const dot  = $('#cursorDot');
+    const ring = $('#cursorRing');
+    if (window.matchMedia('(hover: none)').matches) {
+      dot.style.display = ring.style.display = 'none';
+      document.body.style.cursor = 'auto';
+      return;
+    }
+
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+    });
+
+    (function animateRing() {
+      rx += (mx - rx) * 0.13;
+      ry += (my - ry) * 0.13;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(animateRing);
+    })();
+
+    const bindHover = () => {
+      $$('a, button, .proj-card').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
+      });
+    };
+    bindHover();
+
+    document.addEventListener('mousedown', () => document.body.classList.add('is-clicking'));
+    document.addEventListener('mouseup',   () => document.body.classList.remove('is-clicking'));
+    document.addEventListener('mouseleave', () => { dot.style.opacity = ring.style.opacity = 0; });
+    document.addEventListener('mouseenter', () => { dot.style.opacity = 1; ring.style.opacity = 0.6; });
+  }
+
+  /* ─── Scroll progress bar ─── */
+  function initScrollProgress() {
+    const bar = $('#scrollBar');
+    const update = () => {
+      const max = document.body.scrollHeight - window.innerHeight;
+      bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+
+  /* ─── Nav condense on scroll ─── */
+  function initNav() {
+    const nav = $('#nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 60);
+    }, { passive: true });
+  }
+
+  /* ─── Title scramble ─── */
+  const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  function scramble(el, finalText, duration = 1100) {
+    if (prefersReducedMotion) { el.textContent = finalText; return; }
+    let frame = 0;
+    const totalFrames = duration / 40;
+    const len = finalText.length;
+
+    const tick = () => {
+      let out = '';
+      const resolved = Math.floor((frame / totalFrames) * len);
+      for (let i = 0; i < len; i++) {
+        out += i < resolved
+          ? finalText[i]
+          : CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
+      el.textContent = out;
+      frame++;
+      if (frame <= totalFrames) requestAnimationFrame(tick);
+      else el.textContent = finalText;
+    };
+    tick();
+  }
+
+  /* ─── Magnetic buttons ─── */
+  function initMagnetic() {
+    if (prefersReducedMotion || !HAS_GSAP) return;
+    $$('.theme-btn, .nav-logo').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width / 2)) * 0.25;
+        const dy = (e.clientY - (r.top + r.height / 2)) * 0.25;
+        gsap.to(el, { x: dx, y: dy, duration: 0.4, ease: 'power3.out' });
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+  }
+
+  /* ─── No-JS-animation fallback: show everything at rest ─── */
+  function revealAll() {
+    $$('.nav, .page-eyebrow, .page-title, .page-lede, .sec-label-row, .proj-card, #projEmpty')
+      .forEach(el => {
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      });
+    const rule = $('#headRule');
+    if (rule) rule.style.transform = 'scaleX(1)';
+  }
+
+  function dismissLoader(instant) {
+    const loader = $('#loader');
+    document.body.style.overflow = '';
+    if (instant) { loader.style.display = 'none'; return; }
+    loader.style.transition = 'opacity 0.55s ease';
+    loader.style.opacity = 0;
+    setTimeout(() => { loader.style.display = 'none'; }, 600);
+  }
+
+  /* ─── Entrance + scroll reveals ─── */
+  function initReveals() {
+    if (!HAS_GSAP) return;
+
+    gsap.set('.sec-label-row', { opacity: 0, x: -20 });
+
+    // IntersectionObserver rather than ScrollTrigger: it also fires for
+    // elements that are already in view on load (short pages, tall screens).
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        obs.unobserve(el);
+        const i = Number(el.dataset.revealIndex || 0);
+        gsap.to(el, {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          duration: el.classList.contains('sec-label-row') ? 0.6 : 0.75,
+          delay: (i % 3) * 0.1,
+          ease: 'power3.out'
+        });
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+    const cards = PROJECTS.length ? $$('.proj-card') : [$('#projEmpty')];
+    cards.forEach((el, i) => { if (el) el.dataset.revealIndex = i; });
+
+    [...$$('.sec-label-row'), ...cards].forEach(el => { if (el) io.observe(el); });
+  }
+
+  function pageEntrance() {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+    gsap.set(['.page-eyebrow', '.page-lede'], { opacity: 0, y: 20 });
+    gsap.set('.page-title', { opacity: 0, y: 40 });
+    gsap.set('.nav', { opacity: 0, y: -14 });
+
+    tl.to('.nav', { opacity: 1, y: 0, duration: 0.7 })
+      .to('.page-eyebrow', { opacity: 1, y: 0, duration: 0.6 }, '-=0.35')
+      .to('.page-title', {
+        opacity: 1, y: 0, duration: 0.9,
+        onStart: () => {
+          const el = $('.page-title .scramble');
+          if (el) scramble(el, el.dataset.text);
+        }
+      }, '-=0.25')
+      .to('.page-lede', { opacity: 1, y: 0, duration: 0.7 }, '-=0.5')
+      .to('#headRule', { scaleX: 1, duration: 1.1, ease: 'power3.inOut' }, '-=0.55')
+      .add(initReveals, '-=0.7');
+  }
+
+  /* ─── Loader ─── */
+  function initLoader() {
+    const loader = $('#loader');
+    document.body.style.overflow = 'hidden';
+
+    // Hard safety net: never trap the page behind the loader.
+    const failsafe = setTimeout(() => {
+      if (loader.style.display !== 'none') { dismissLoader(true); revealAll(); }
+    }, 4000);
+
+    if (!HAS_GSAP) {
+      clearTimeout(failsafe);
+      revealAll();
+      setTimeout(() => dismissLoader(false), 400);
+      return;
+    }
+
+    gsap.timeline({
+      onComplete: () => {
+        clearTimeout(failsafe);
+        gsap.to(loader, {
+          opacity: 0, duration: 0.55, ease: 'power2.inOut',
+          onComplete: () => {
+            loader.style.display = 'none';
+            document.body.style.overflow = '';
+            pageEntrance();
+            ScrollTrigger.refresh();
+          }
+        });
+      }
+    }).to({}, { duration: prefersReducedMotion ? 0.2 : 1.15 });
+  }
+
+  function init() {
+    renderProjects();
+    initTheme();
+    initCursor();
+    initScrollProgress();
+    initNav();
+    initMagnetic();
+    if (HAS_GSAP) gsap.set('.sec-label-row', { opacity: 0, x: -20 });
+    initLoader();
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

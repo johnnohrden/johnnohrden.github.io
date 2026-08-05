@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Claude Code / editor config
+.claude/
+
+# Local-only working files — not part of the published site.
+# Delete a line here if you ever want one of these on the live site.
+resume.md
+*.docx
+Screenshot*.png
