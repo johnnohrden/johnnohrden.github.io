@@ -497,6 +497,20 @@ img { display: block; max-width: 100%; }
   gap: 10px;
 }
 
+.skills-groups {
+  display: grid;
+  gap: 28px;
+}
+
+.skills-group-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
 .m-tag {
   font-family: var(--mono);
   font-size: 0.8125rem;
